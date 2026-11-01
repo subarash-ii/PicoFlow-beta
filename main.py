@@ -15,22 +15,11 @@ display = ssd1306.SSD1306_I2C(128, 64, i2c)
 
 options = get_scripts()
 
-options.append("1")
-options.append("2")
-options.append("3")
-options.append("4")
-options.append("5")
-options.append("6")
-options.append("7")
-options.append("8")
-
 selected = 0
 active_button = None
 
 start_index = 0
 stop_index = 5
-
-# draw_script_running_menu(display, "blink")
 
 start_index, stop_index = draw_list_menu(display, options, selected, start_index, stop_index)
 
@@ -60,12 +49,8 @@ while True:
             time.sleep_ms(30)
 
             if button_select.value() == 0:
-                filename = f"scripts/{options[selected]}.py"
-
-                with open(filename, "r") as source:
-                    script = source.read()
-
-                print(script)
+                module = __import__(f"scripts.{options[selected]}", None, None, ["main"])
+                module.main(display, button_select, options, options[selected])
 
                 active_button = button_select
 
