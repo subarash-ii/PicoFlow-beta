@@ -15,12 +15,8 @@ usb.device.get().init(kb, builtin_driver=True)
 
 button = Pin(BUTTON_UP_PIN, Pin.IN, Pin.PULL_UP)
 
-print("Waiting for USB keyboard...")
-
 while not kb.is_open():
     time.sleep_ms(100)
-
-print("Keyboard ready")
 
 writer = KeyboardWriter(kb)
 
